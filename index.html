@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Integration with Zoho CRM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .form-group button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <form id="zohoForm">
+     
+      <div class="form-group">
+        <label for="Last_Name">Prenom et nom</label>
+        <input type="text" id="Last_Name" name="Last_name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="Email" name="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="tel" id="Phone" name="Phone" required>
+      </div>
+      <div class="form-group">
+        <label for="Postal_Code">Postal_Code</label>
+        <input type="text" id="Postal_Code" name="Postal_Code" required>
+      </div>
+      <div class="form-group">
+        <label for="French">Language</label>
+        <input type="checkbox" name="French" id="French">
+        <input type="checkbox" name="English" id="English">
+      </div>
+      <div class="form-group">
+        <label for="Educational_Institution">Educational Institution</label>
+        <input type="text" id="Educational_Institution" name="Educational_Institution" required>
+      </div>
+      <div class="form-group">
+        <label for="Study_Program">Study_Program</label>
+        <input type="text" id="Study_Program" name="Study_Program" required>
+      </div>
+      <div class="form-group">
+        <label for="Time_Remaining ">Time_Remaining</label>
+        <input type="text" id="Time_Remaining" name="Time_Remaining" required>
+      </div>
+      <div class="form-group">
+        <label for="Skills ">Skills</label>
+        <textarea id="Skills" name="Skills" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="Company_Institution">Company_Institution</label>
+        <input type="text" id="Company_Institution" name="Company_Institution" required>
+      </div>
+      <div class="form-group">
+        <label for="Position">Position</label>
+        <input type="text" id="Position" name="Position" required>
+      </div>
+      <div class="form-group">
+        <label for="Experience_description">Experience_description</label>
+        <input type="text" id="Experience_description" name="Experience_description" required>
+      </div>
+      <div class="form-group">
+        <label for="CV">CV</label>
+        <input type="text" id="CV" name="CV" required>
+      </div>
+      <!-- <div class="form-group">
+        <label for="CV">CV</label>
+        <input type="file" id="CV" name="CV" required>
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="Reference_Name ">Reference_Name </label>
+        <input type="text" id="Reference_Name " name="Reference_Name " required>
+      </div>
+      <div class="form-group">
+        <label for="Reference_Phone_Number">Reference_Phone_Number</label>
+        <input type="text" id="Reference_Phone_Number" name="Reference_Phone_Number" required>
+      </div> -->
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+<script>
+//  async function uploadFile(file, id) {
+//     const accessToken = '1000.9c2d6e1fd1cf27f93e453010906a2e08.21535672b0a4190f5545210409a3bc91';
+//     const endpoint = `https://www.zohoapis.ca/crm/v6/Leads/${id}/Attachments`; // Update the endpoint
+  
+//     console.log(document.getElementById('CV').files[0])
+//     const formData = new FormData();
+//     formData.append('file',document.getElementById('CV').files[0]);
+  
+//     const requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': `Zoho-oauthtoken ${accessToken}`
+//         },
+//         body: formData,
+//         mode: 'no-cors' // Set the mode to 'no-cors'
+//     };
+  
+//     try {
+//         const response = await fetch(endpoint, requestOptions);
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok ' + response.statusText);
+//         }
+//         const data = await response.json();
+//         return data.data[0].details.id; // Return the file ID
+//     } catch (error) {
+//         console.error('There was a problem with the fetch operation:', error);
+//     }
+//   }
+
+    document.getElementById('zohoForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const Last_Name = document.getElementById('Last_Name').value;
+      const Email = document.getElementById('Email').value;
+      const Phone = document.getElementById('Phone').value;
+        const Postal_Code = document.getElementById('Postal_Code').value;
+      const French = document.getElementById('French').checked;
+      const English = document.getElementById('English').checked;
+      const Educational_Institution = document.getElementById('Educational_Institution').value;
+      const Study_Program = document.getElementById('Study_Program').value;
+      const Time_Remaining = document.getElementById('Time_Remaining').value;
+      const Skills = document.getElementById('Skills').value;
+      const Company_Institution = document.getElementById('Company_Institution').value;
+      const Position = document.getElementById('Position').value;
+      const CV = document.getElementById('CV').value;
+      // const CV = document.getElementById('CV').files[0];
+      // console.log(CV);
+//const Reference_Name = document.getElementById('Reference_Name').value;
+      //const Reference_Phone_Number = document.getElementById('Reference_Phone_Number').value;
+
+
+      try {
+        const response = await fetch('http://localhost:3002/api/form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            Last_Name,
+            Email,
+            Phone,
+            Postal_Code,
+            French,
+            English,
+            Educational_Institution,
+            Study_Program,
+            Time_Remaining,
+            Skills,
+            Company_Institution,
+            Position,
+            CV,
+            Experience_description
+           
+          })
+        
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Form submitted successfully', data);
+          // console.log(data.data.data[0].details.id)
+        //  console.log(uploadFile(CV ,data.data.data[0].details.id))
+
+
+
+          alert('Form submitted successfully!');
+        } else {
+          const errorData = await response.json();
+          console.error('Error submitting form', errorData);
+          alert('Error submitting form: ' + errorData.error);
+        }
+      } catch (error) {
+        console.error('Error submitting form', error);
+        alert('Error submitting form: ' + error.message);
+      }
+    });
+  </script>
+
+  <!-- <script>
+    document.getElementById('zohoForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const formData = new FormData();
+      formData.append('Last_Name', document.getElementById('Last_Name').value);
+      formData.append('Email', document.getElementById('Email').value);
+      formData.append('Phone', document.getElementById('Phone').value);
+      formData.append('Postal_Code', document.getElementById('Postal_Code').value);
+      formData.append('French', document.getElementById('French').checked);
+      formData.append('English', document.getElementById('English').checked);
+      formData.append('Educational_Institution', document.getElementById('Educational_Institution').value);
+      formData.append('Study_Program', document.getElementById('Study_Program').value);
+      formData.append('Time_Remaining', document.getElementById('Time_Remaining').value);
+      formData.append('Skills', document.getElementById('Skills').value);
+      formData.append('Company_Institution', document.getElementById('Company_Institution').value);
+      formData.append('Position', document.getElementById('Position').value);
+      // formData.append('CV', document.getElementById('CV').files[0]);
+
+      try {
+        const response = await fetch('http://localhost:3002/api/form', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Form submitted successfully', data);
+          alert('Form submitted successfully!');
+        } else {
+          const errorData = await response.json();
+          console.error('Error submitting form', errorData);
+          alert('Error submitting form: ' + errorData.error);
+        }
+      } catch (error) {
+        console.error('Error submitting form', error);
+        alert('Error submitting form: ' + error.message);
+      }
+    });
+  </script> -->
+
+</body>
+
+</html>
